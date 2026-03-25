@@ -27,14 +27,18 @@
 	main {
 		flex: 1;
 		width: 100%;
-		max-width: 72rem;
+		max-width: 720px;
 		margin: 0 auto;
 		padding: 2rem;
 		box-sizing: border-box;
 	}
 
 	footer {
+		width: 100%;
+		max-width: 720px;
+		margin: 0 auto;
 		padding: 2rem;
+		box-sizing: border-box;
 		text-align: center;
 		color: var(--color-text-muted);
 		font-size: 0.85rem;

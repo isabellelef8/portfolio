@@ -1,6 +1,53 @@
 <script lang="ts">
+	import { onMount, onDestroy } from 'svelte';
 	import { resolve } from '$app/paths';
 	import { campaigns } from '$lib/campaigns';
+	import { heroStuck } from '$lib/stores';
+
+	let scrollY = $state(0);
+
+	// Sticky header
+	let h1El: HTMLElement;
+	let h1Wrap: HTMLElement;
+	let h1Start = $state(0);
+	let targetTop = 24; // align with header padding (~1.5rem)
+	let isStuck = $derived(h1Start > 0 && scrollY >= h1Start - targetTop);
+
+	// Fade hero h1 as it approaches stuck position
+	let heroOpacity = $derived(() => {
+		if (h1Start === 0) return 1;
+		const fadeStart = 0;
+		const fadeEnd = h1Start - targetTop;
+		if (scrollY <= fadeStart) return 1;
+		if (scrollY >= fadeEnd) return 0;
+		return 1 - scrollY / fadeEnd;
+	});
+
+	// Sync stuck state to shared store for Header
+	$effect(() => {
+		heroStuck.set(isStuck);
+	});
+
+	onMount(() => {
+		h1Start = h1El.offsetTop;
+
+		let ticking = false;
+		const onScroll = () => {
+			if (!ticking) {
+				requestAnimationFrame(() => {
+					scrollY = window.scrollY;
+					ticking = false;
+				});
+				ticking = true;
+			}
+		};
+		window.addEventListener('scroll', onScroll, { passive: true });
+		return () => window.removeEventListener('scroll', onScroll);
+	});
+
+	onDestroy(() => {
+		heroStuck.set(false);
+	});
 </script>
 
 <svelte:head>
@@ -9,7 +56,11 @@
 </svelte:head>
 
 <section class="hero">
-	<h1>Izzi is a creative</h1>
+	<div bind:this={h1Wrap} class="h1-wrap">
+		<h1 bind:this={h1El} style="opacity: {heroOpacity()}">
+			Izzi is a creative
+		</h1>
+	</div>
 </section>
 
 <section class="campaigns">

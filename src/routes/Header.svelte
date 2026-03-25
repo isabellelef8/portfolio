@@ -1,10 +1,21 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
+	import { heroStuck } from '$lib/stores';
+
+	const isHome = $derived(page.url.pathname === '/');
+	let stuck = $state(false);
+	heroStuck.subscribe((v) => (stuck = v));
 </script>
 
 <header>
-	<a href={resolve('/')} class="site-name">Izzi LeFebvre</a>
+	<a
+		href={resolve('/')}
+		class="site-name"
+		style="opacity: {isHome && !stuck ? 0 : 1}; pointer-events: {isHome && !stuck ? 'none' : 'auto'}"
+	>
+		Izzi LeFebvre
+	</a>
 
 	<nav>
 		<ul>
@@ -20,16 +31,25 @@
 
 <style>
 	header {
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		background: var(--color-bg, #fff);
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		width: 100%;
+		max-width: 720px;
+		margin: 0 auto;
 		padding: 1.5rem 2rem;
+		box-sizing: border-box;
 	}
 
 	.site-name {
 		font-size: 1.1rem;
 		font-weight: 400;
 		letter-spacing: 0.02em;
+		transition: opacity 0.3s ease;
 	}
 
 	nav ul {
