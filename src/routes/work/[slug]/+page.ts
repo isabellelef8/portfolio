@@ -7,3 +7,7 @@ export const load: PageLoad = ({ params }) => {
 	if (!campaign) throw error(404, 'Campaign not found');
 	return { campaign };
 };
+
+export function entries() {
+	return campaigns.map((c) => ({ slug: c.slug }));
+}

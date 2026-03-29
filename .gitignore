@@ -27,3 +27,4 @@ certs/
 caddy_data/
 *.log
 *.pid
+bin/

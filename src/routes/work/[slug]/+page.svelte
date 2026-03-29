@@ -1,33 +1,36 @@
 <script lang="ts">
+	import ImageGallery from '$lib/components/ImageGallery.svelte';
+
 	let { data } = $props();
+	let campaign = $derived(data.campaign);
 </script>
 
 <svelte:head>
-	<title>{data.campaign.title} | Izzi LeFebvre</title>
-	<meta name="description" content={data.campaign.title} />
+	<title>{campaign.title} | Isabelle LeFebvre</title>
+	<meta name="description" content={campaign.description} />
 </svelte:head>
 
 <article class="campaign">
-	<div class="hero-image">
-		<div class="placeholder-image" aria-label={data.campaign.title}></div>
-	</div>
+	<img class="hero-image" src={campaign.hero.src} alt={campaign.hero.alt} />
 
 	<header>
-		<span class="number">{data.campaign.number}</span>
-		<h1>{data.campaign.title}</h1>
-		<p class="subtitle">{data.campaign.subtitle}</p>
+		<span class="number">{campaign.number}</span>
+		<h1>{campaign.title}</h1>
+		<p class="meta">{campaign.brand} &middot; {campaign.period}</p>
+		<p class="subtitle">{campaign.subtitle}</p>
 	</header>
 
-	<section class="content">
-		<p>
-			Placeholder campaign description. Details about the creative direction, strategy, and
-			execution of this campaign.
-		</p>
-		<p>
-			Additional placeholder text about the results, impact, and creative process behind
-			this work.
-		</p>
+	<section class="description">
+		<p>{campaign.description}</p>
 	</section>
+
+	{#each campaign.channels as section}
+		<section class="channel">
+			<h2>{section.channel}</h2>
+			<p>{section.description}</p>
+			<ImageGallery images={section.images} layout={section.layout ?? 'full'} />
+		</section>
+	{/each}
 </article>
 
 <style>
@@ -36,10 +39,9 @@
 		margin: 0 auto;
 	}
 
-	.placeholder-image {
+	.hero-image {
 		width: 100%;
-		aspect-ratio: 16 / 9;
-		background-color: #e8e8e8;
+		height: auto;
 		border-radius: 2px;
 	}
 
@@ -60,13 +62,33 @@
 		margin: 0 0 0.5rem;
 	}
 
+	.meta {
+		font-size: 0.9rem;
+		color: var(--color-text-muted);
+		margin: 0 0 0.5rem;
+	}
+
 	.subtitle {
 		font-style: italic;
 		color: var(--color-text-muted);
 	}
 
-	.content {
-		padding-bottom: 4rem;
+	.description {
+		padding-bottom: 2rem;
+	}
+
+	.channel {
+		padding: 2rem 0;
+		border-top: 1px solid var(--color-border);
+	}
+
+	.channel h2 {
+		margin: 0 0 0.5rem;
+	}
+
+	.channel p {
+		margin: 0 0 1.5rem;
+		color: var(--color-text-muted);
 	}
 
 	@media (min-width: 640px) {

@@ -1,44 +1,81 @@
-# sv
+# Hey Isabelle!
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+This is your portfolio website. It shows off the campaign work you've done at CURiO Brands — Thymes, Capri Blue, and Otherland. The site is built with [SvelteKit](https://svelte.dev/docs/kit), which is a framework for building websites. You don't need to know how all of it works — this guide covers what you'll actually need day-to-day.
 
-Hello from Louis' computer
+## Where things live
 
-## Creating a project
+Here's a quick map of the project:
 
-If you're seeing this, you've probably already done this step. Congrats!
+```
+src/
+  routes/           ← the pages of your site
+    +page.svelte       homepage
+    about/             your about page
+    work/[slug]/       campaign detail pages (Noir Woods, Iced Matcha, etc.)
+  lib/
+    campaigns.ts    ← all the campaign data (titles, descriptions, images)
+    components/     ← reusable pieces like the image gallery
 
-```sh
-# create a new project
-npx sv create my-app
+static/
+  images/campaigns/ ← the optimized images that show up on campaign pages
+
+bin/                ← your raw campaign files (not published to the site)
 ```
 
-To recreate this project with the same configuration:
+The files that end in `.svelte` are the actual pages — they're a mix of HTML, CSS, and a little JavaScript. If you remember HTML/CSS from college, a lot of it will look familiar!
+
+## Running the site locally
+
+Open your terminal, navigate to this project folder, and use the justfile commands:
 
 ```sh
-# recreate this project
-bun x sv@0.12.8 create --template demo --types ts --install bun .
+# start the dev server (you'll see your site at http://localhost:5173)
+just dev
+
+# build the production version
+just build
+
+# see all available commands
+just
 ```
 
-## Developing
+While `just dev` is running, any changes you save will show up in the browser automatically — no need to refresh.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Making changes
 
-```sh
-npm run dev
+You already know the git basics, so here's the workflow:
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+1. Make your edits and save the file
+2. `git add .` to stage your changes
+3. `git commit -m "describe what you changed"` to save a snapshot
+4. `git push` to send it to GitHub
 
-## Building
+If you're ever unsure what's changed, `git status` will show you.
 
-To create a production version of your app:
+## Key files you'll touch
 
-```sh
-npm run build
-```
+| What you want to do | Where to look |
+|---------------------|---------------|
+| Edit campaign info (titles, descriptions, images) | `src/lib/campaigns.ts` |
+| Change your about page | `src/routes/about/+page.svelte` |
+| Change the homepage | `src/routes/+page.svelte` |
+| Add/replace campaign images | `static/images/campaigns/` |
+| Update site-wide styles (fonts, colors) | `src/routes/layout.css` |
 
-You can preview the production build with `npm run preview`.
+## Adding new campaign images
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+The raw files from your work live in `bin/`. When you want to add new images to the site:
+
+1. Pick the best images from `bin/`
+2. Run the optimization script: `bun run scripts/optimize-images.ts`
+   (you may need to update the script to include your new images first — ask Louis if you need help with this)
+3. The optimized images will appear in `static/images/campaigns/`
+4. Reference them in `src/lib/campaigns.ts`
+
+## Getting help
+
+If you get stuck or something breaks, don't worry! You can:
+
+- Ask Louis
+- Use [Claude Code](https://claude.com/claude-code) — it can read your project and help you make changes
+- Check the [SvelteKit docs](https://svelte.dev/docs/kit) if you're curious about how things work under the hood
