@@ -63,7 +63,7 @@
 <section class="hero">
     <div bind:this={h1Wrap} class="h1-wrap">
         <h1 bind:this={h1El} style="opacity: {heroOpacity()}">
-            Isabelle is a creative
+            <strong>Isabelle is a creative</strong>
         </h1>
     </div>
 
@@ -93,7 +93,7 @@
     {#each campaigns as campaign}
         <a href={resolve(`/work/${campaign.slug}`)} class="campaign-link">
             <span class="number">{campaign.number}</span>
-            <span class="title">{campaign.title}</span>
+            <strong><span class="title">{campaign.title}</span></strong>
         </a>
     {/each}
 </section>
