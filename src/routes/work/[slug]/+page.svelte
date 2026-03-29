@@ -42,7 +42,7 @@
 	.hero-image {
 		width: 100%;
 		height: auto;
-		border-radius: 2px;
+		border-radius: 8px;
 	}
 
 	header {

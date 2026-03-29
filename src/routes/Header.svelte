@@ -42,6 +42,7 @@
         top: 0;
         z-index: 100;
         background: var(--color-bg, #fff);
+        font-family: var(--font-body);
         display: flex;
         justify-content: space-between;
         align-items: center;

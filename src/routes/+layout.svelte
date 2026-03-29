@@ -111,6 +111,7 @@
         padding: 3rem 2rem;
         box-sizing: border-box;
         text-align: center;
+        font-family: var(--font-body);
     }
 
     .social-links {
