@@ -13,6 +13,6 @@ RUN bun run build
 FROM caddy:2-alpine
 
 COPY --from=build /app/build /srv
-COPY Caddyfile.prod /etc/caddy/Caddyfile
+COPY Caddyfile /etc/caddy/Caddyfile
 
 EXPOSE 80 443

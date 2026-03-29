@@ -1,6 +1,5 @@
 bun := require("bun")
 
-# https://cheatography.com/linux-china/cheat-sheets/justfile/
 [doc('List out available recipes')]
 default:
     @just --list
@@ -9,14 +8,16 @@ default:
 
 alias dev := run
 alias serve := run
+
 # Run the vite dev server using bun runtime
 run:
-    {{bun}} run dev
+    {{ bun }} run dev
 
 # Build the static site
 build:
-    {{bun}} run check
-    {{bun}} run build
+    {{ bun }} run check
+    {{ bun }} run build
+    docker build -t website .
 
 # Generate local TLS certificates using mkcert
 cert:

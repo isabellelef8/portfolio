@@ -1,6 +1,0 @@
-{$DOMAIN:localhost}:443 {
-	tls {$CERT_FILE:certs/localhost.pem} {$CERT_KEY:certs/localhost-key.pem}
-	root * build
-	file_server
-	encode gzip
-}

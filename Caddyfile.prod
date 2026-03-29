@@ -1,5 +1,0 @@
-izzi-portfolio.com {
-	root * /srv
-	file_server
-	encode gzip
-}
