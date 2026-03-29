@@ -22,8 +22,8 @@
 
     <nav>
         <ul>
-            <li aria-current={page.url.pathname === "/" ? "page" : undefined}>
-                <a href={resolve("/")}>Home</a>
+            <li aria-current={page.url.pathname === "/" && stuck ? "page" : undefined}>
+                <a href={resolve("/#campaigns")}>Work</a>
             </li>
             <li
                 aria-current={page.url.pathname === "/about"
