@@ -90,7 +90,6 @@
 </section>
 
 <section class="campaigns" id="campaigns" bind:this={campaignsEl}>
-    <h2>Work</h2>
     {#each campaigns as campaign}
         <a href={resolve(`/work/${campaign.slug}`)} class="campaign-link">
             <span class="number">{campaign.number}</span>
